@@ -29,21 +29,21 @@ export default function LoginPage() {
     }
 
     // Fetch role from profile table
-    const { data: profiles, error: profilesError } =
+    const { data: profile, error: profileError } =
       await supabase
         .from("profiles")
         .select("role")
         .eq("id", data.user.id)
         .single()
 
-    if (profilesError || !profiles) {
-      setError("Profiles not found")
+    if (profileError || !profile) {
+      setError(profileError?.message || "Failed to fetch user profile")
       setLoading(false)
       return
     }
 
     // Redirect based on role
-    switch (profiles.role) {
+    switch (profile.role) {
       case "admin":
         router.push("/dashboard")
         break
@@ -54,7 +54,7 @@ export default function LoginPage() {
         router.push("/delivery")
         break
       default:
-        router.push("/")
+        router.push("/src/app")
     }
 
     setLoading(false)
