@@ -1,7 +1,8 @@
-import type { NextConfig } from "next";
-
+import withPWA from "next-pwa"
+import type { NextConfig } from "next"
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  reactStrictMode: true,
 
-export default nextConfig;
+  // 🔴 Force webpack (disable Turbopack)
+  experimental: ({ turbo: false } as unknown) as NextConfig["experimental"],
+}
